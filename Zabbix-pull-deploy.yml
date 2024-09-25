@@ -1,0 +1,28 @@
+---
+- name: Zabbix install
+  hosts: localhost
+  tasks:
+    - #name: Pull Zabbix frontend
+      #docker_image:
+        #name: zabbix/zabbix-web-apache-mysql
+        #source: pull
+
+    - #name: Pull Zabbix backend
+      #docker_image: 
+        #name: zabbix/zabbix-server-mysql
+        #source: pull
+
+    - #name: Pull Zabbix agent
+      #docker_image: 
+       #name: zabbix/zabbix-agent
+        #source: pull
+    
+    - name: Docker Compose to deploy local Zabbix
+      community.docker.docker_compose_v2:
+        project_src: compose/compose.yml
+        register: output
+    
+    - name: Compose output
+      ansible.builtin.debug:
+        var: output
+        
