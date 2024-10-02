@@ -1,0 +1,7 @@
+---
+  - name: Configure 700 series hosts in PVE
+    hosts: pve700grp
+    tasks:
+      - name: Deploy Portainer to devices
+        community.docker.docker_compose_v2:
+          

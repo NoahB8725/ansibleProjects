@@ -1,0 +1,16 @@
+---
+- name: Zabbix-deploy
+  hosts: localhosts
+  tasks:
+    - name: Inital docker-compose
+      community.docker.docker_compose_v2:
+        project_src: ~/VSCode/ansibleProjects/
+        state: present
+      register: output
+    
+    - name: Show compose result
+      ansible.builtin.debug:
+        var: output
+    
+    - name: Import scheema into zabbix-mysql
+      command: docker cp schema.sql zabbix-mysql:/schema.sql

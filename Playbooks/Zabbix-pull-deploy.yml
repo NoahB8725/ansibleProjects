@@ -19,8 +19,11 @@
     
     - name: Docker Compose to deploy local Zabbix
       community.docker.docker_compose_v2:
-        project_src: compose/compose.yml
-        register: output
+        docker_cli: /Applications/Docker.app/Contents/Resources/bin/
+        project_src: ./compose/
+        files:
+          - docker-compose.yml
+      register: output
     
     - name: Compose output
       ansible.builtin.debug:

@@ -1,0 +1,50 @@
+---
+ungrouped:
+  hosts:
+    192.168.100.52:
+      ansible_user: noahb
+      ansible_password: motorheadr35gtr
+    192.168.250.1:
+      ansible_user: root
+      ansible_password: opnsense
+    
+
+winservers:
+  hosts:
+    192.168.50.51:
+      ansible_user: Administrator
+      ansible_password: Motorheadr35gtr!
+    192.168.50.52:
+      ansible_user: Administrator
+      ansible_password: Motorheadr35gtr!
+
+localhosts:
+  hosts:
+    127.0.0.1:
+      ansible_user: nrbauer
+      ansible_password: motorheadr35gtr
+      ansible_sudo_password: motorheadr35gtr
+
+dnspi:
+  hosts:
+    192.168.1.20:
+      ansible_user: noahpi
+      ansible_password: motorheadr35gtr
+
+nmspi:
+  hosts:
+    192.168.1.25:
+      ansible_user: noahsnmp
+      ansible_password: thefear1
+
+pvenms:
+  hosts:
+    192.168.150.51:
+      ansible_user: noahsnmp
+      ansible_password: thefear1
+    192.168.150.52:
+      ansible_user: noahsnmp
+      ansible_password: thefear1
+    192.158.150.53:
+      ansible_user: noahsnmp
+      ansible_password: thefear1

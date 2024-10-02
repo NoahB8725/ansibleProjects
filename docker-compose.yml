@@ -1,0 +1,71 @@
+version: '2'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.2
+    container_name: zabbix-mysql
+    environment:
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: zabbix_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - zabbix-net
+    restart: unless-stopped
+
+  # Zabbix Server
+  zabbix-server:
+    image: zabbix/zabbix-server-mysql:latest
+    container_name: zabbix-server
+    environment:
+      DB_SERVER_HOST: zabbixDB
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: zabbix_pass
+    depends_on:
+      - mysql
+    volumes:
+      - zabbix_server_data:/var/lib/zabbix
+    networks:
+      - zabbix-net
+    restart: unless-stopped
+
+  # Zabbix Web Interface (Apache)
+  zabbix-web:
+    image: zabbix/zabbix-web-apache-mysql:6.0-ubuntu-latest
+    container_name: zabbix-web
+    environment:
+      ZBX_SERVER_HOST: zabbix-server
+      DB_SERVER_HOST: mysql
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: zabbix_pass
+      TZ: US/Phoenix  # Adjust as per your location
+    depends_on:
+      - zabbix-server
+      - mysql
+    ports:
+      - "8080:8080"   # Web UI on port 8080
+    networks:
+      - zabbix-net
+    restart: unless-stopped
+
+  # Zabbix Agent
+  zabbix-agent:
+    image: zabbix/zabbix-agent:latest
+    container_name: zabbix-agent
+    environment:
+      ZBX_SERVER_HOST: zabbix-server
+    networks:
+      - zabbix-net
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  zabbix_server_data:
+
+networks:
+  zabbix-net:
